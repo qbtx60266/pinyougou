@@ -58,7 +58,7 @@ public class BrandServiceImpl implements BrandService {
 
         List<TbBrand> tbBrands = brandMapper.selectByExample(tbBrandExample);
 
-        if (tbBrands!=null || tbBrands.size()> 0){
+        if (tbBrands!=null && tbBrands.size()> 0){
             throw new RuntimeException("品牌名重复");
         }
 
