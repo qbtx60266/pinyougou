@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.pinyougou.mapper.TbBrandMapper;
 import com.pinyougou.pojo.TbBrand;
+import com.pinyougou.pojo.TbBrandExample;
 import com.pinyougou.sellergoods.service.BrandService;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,16 @@ public class BrandServiceImpl implements BrandService {
      */
     @Override
     public void add(TbBrand tbBrand) {
+        TbBrandExample tbBrandExample = new TbBrandExample();
+
+        tbBrandExample.createCriteria().andNameEqualTo(tbBrand.getName());
+
+        List<TbBrand> tbBrands = brandMapper.selectByExample(tbBrandExample);
+
+        if (tbBrands!=null || tbBrands.size()> 0){
+            throw new RuntimeException("品牌名重复");
+        }
+
         brandMapper.insert(tbBrand);
     }
 
