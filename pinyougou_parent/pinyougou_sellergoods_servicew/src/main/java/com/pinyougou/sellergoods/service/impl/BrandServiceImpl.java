@@ -75,16 +75,48 @@ public class BrandServiceImpl implements BrandService {
         return brandMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 修改品牌
+     * @param tbBrand
+     */
     @Override
     public void update(TbBrand tbBrand) {
         brandMapper.updateByPrimaryKey(tbBrand);
     }
 
+    /**
+     * 删除品牌
+     * @param ids
+     */
     @Override
     public void delete(Long[] ids) {
         for (Long id : ids) {
             brandMapper.deleteByPrimaryKey(id);
         }
+    }
+
+    /**
+     * 模糊分页查询
+     * @param brand
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageResult findPage(TbBrand brand, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        TbBrandExample tbBrandExample = new TbBrandExample();
+        TbBrandExample.Criteria criteria = tbBrandExample.createCriteria();
+        if (brand!=null){
+            if (brand.getName()!=null&&brand.getName().length()>0){
+                criteria.andNameLike("%"+brand.getName()+"%");
+            }
+            if (brand.getFirstChar()!=null && brand.getFirstChar().length()>0){
+                criteria.andFirstCharEqualTo(brand.getFirstChar());
+            }
+        }
+        Page<TbBrand> page = (Page<TbBrand>) brandMapper.selectByExample(tbBrandExample);
+        return new PageResult(page.getTotal(),page.getResult());
     }
 
 
