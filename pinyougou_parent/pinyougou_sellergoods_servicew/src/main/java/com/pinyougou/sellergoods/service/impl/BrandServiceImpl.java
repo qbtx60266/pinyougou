@@ -80,5 +80,12 @@ public class BrandServiceImpl implements BrandService {
         brandMapper.updateByPrimaryKey(tbBrand);
     }
 
+    @Override
+    public void delete(Long[] ids) {
+        for (Long id : ids) {
+            brandMapper.deleteByPrimaryKey(id);
+        }
+    }
+
 
 }
