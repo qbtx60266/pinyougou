@@ -38,8 +38,8 @@
 					$scope.findPage($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);//重新加载
             };
 			//分页查询
-			$scope.findPage=function (pageNum,pageSize) {
-				$http.get("../brand/findPage.do?pageNum="+pageNum+"&pageSize=" + pageSize).success(
+			$scope.findPage=function (page,rows) {
+				$http.get("../brand/findPage.do?page="+page+"&rows=" + rows).success(
 				    function (data) {
                         $scope.list = data.rows;//当前页数据
                         $scope.paginationConf.totalItems=data.total;//更新总记录
@@ -48,14 +48,23 @@
 				)
             };
             //新增方法
-			$scope.add=function () {
-				$http.post("../brand/add.do",$scope.entity).success(
+			$scope.save=function () {
+				$http.post("../brand/save.do",$scope.entity).success(
 				    function (data) {
 						if(data.success){
 							$scope.reloadList();
 						}else {
 							alert(data.message);
 						}
+                    }
+				)
+            };
+
+            //查询实体
+			$scope.findOne=function (id) {
+				$http.get("../brand/findOne.do?id=" + id).success(
+				    function (data) {
+						$scope.entity=data;
                     }
 				)
             }
@@ -149,7 +158,7 @@
 			 </table>				
 		</div>
 		<div class="modal-footer">						
-			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="add()">保存</button>
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="save()">保存</button>
 			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
 		</div>
 	  </div>

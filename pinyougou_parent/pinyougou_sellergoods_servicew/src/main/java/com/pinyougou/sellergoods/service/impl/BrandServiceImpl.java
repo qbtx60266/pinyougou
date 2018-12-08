@@ -35,15 +35,15 @@ public class BrandServiceImpl implements BrandService {
 
     /**
      * 分页查询
-     * @param pageNum 当前页
-     * @param pageSize 每页记录
+     * @param page 当前页
+     * @param rows 每页记录
      * @return
      */
     @Override
-    public PageResult findPage(Integer pageNum,Integer pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
-        Page<TbBrand> page = (Page<TbBrand>) brandMapper.selectByExample(null);
-        return new PageResult(page.getTotal(),page.getResult());
+    public PageResult findPage(Integer page,Integer rows) {
+        PageHelper.startPage(page,rows);
+        Page<TbBrand> trBrandPage = (Page<TbBrand>) brandMapper.selectByExample(null);
+        return new PageResult(trBrandPage.getTotal(),trBrandPage.getResult());
     }
 
     /**
@@ -63,6 +63,21 @@ public class BrandServiceImpl implements BrandService {
         }
 
         brandMapper.insert(tbBrand);
+    }
+
+    /**
+     * 根据id查询品牌
+     * @param id
+     * @return
+     */
+    @Override
+    public TbBrand findOne(Long id) {
+        return brandMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void update(TbBrand tbBrand) {
+        brandMapper.updateByPrimaryKey(tbBrand);
     }
 
 

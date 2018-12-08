@@ -31,14 +31,14 @@ public class BrandController {
 
     /**
      * 分页查询
-     * @param pageNum
-     * @param pageSize
+     * @param page
+     * @param rows
      * @return
      */
     @RequestMapping("/findPage")
-    public PageResult findPage(@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum,
-                               @RequestParam(name = "pageSize",defaultValue = "10") Integer pageSize){
-        return brandService.findPage(pageNum,pageSize);
+    public PageResult findPage(@RequestParam(name = "pageNum",defaultValue = "1") Integer page,
+                               @RequestParam(name = "pageSize",defaultValue = "10") Integer rows){
+        return brandService.findPage(page,rows);
     }
 
     /**
@@ -46,15 +46,36 @@ public class BrandController {
      * @param tbBrand
      * @return
      */
-    @RequestMapping("/add")
-    public Result add(@RequestBody TbBrand tbBrand){
-        try {
-            brandService.add(tbBrand);
-            return new Result(true,"添加成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false,"添加失败");
+    @RequestMapping("/save")
+    public Result save(@RequestBody TbBrand tbBrand){
+        if (tbBrand.getId()==null){
+            try {
+                brandService.add(tbBrand);
+                return new Result(true,"添加成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new Result(false,"添加失败");
+            }
+        }else {
+            try {
+                brandService.update(tbBrand);
+                return new Result(true,"修改成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new Result(false,"修改失败");
+            }
         }
     }
+
+    /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findOne")
+    public TbBrand findOne(Long id){
+        return brandService.findOne(id);
+    }
+
 
 }
