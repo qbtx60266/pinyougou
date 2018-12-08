@@ -36,8 +36,8 @@ public class BrandController {
      * @return
      */
     @RequestMapping("/findPage")
-    public PageResult findPage(@RequestParam(name = "pageNum",defaultValue = "1") Integer page,
-                               @RequestParam(name = "pageSize",defaultValue = "10") Integer rows){
+    public PageResult findPage(@RequestParam(name = "page",defaultValue = "1") Integer page,
+                               @RequestParam(name = "rows",defaultValue = "10") Integer rows){
         return brandService.findPage(page,rows);
     }
 
