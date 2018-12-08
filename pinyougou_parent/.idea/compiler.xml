@@ -18,15 +18,15 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="generatorSqlmapCustom" target="1.5" />
-      <module name="pinyougou_common" target="1.7" />
-      <module name="pinyougou_dao" target="1.7" />
-      <module name="pinyougou_manager_web" target="1.7" />
-      <module name="pinyougou_parent" target="1.7" />
-      <module name="pinyougou_pojo" target="1.7" />
-      <module name="pinyougou_sellergoods_interface" target="1.7" />
+      <module name="pinyougou_common" target="1.8" />
+      <module name="pinyougou_dao" target="1.8" />
+      <module name="pinyougou_manager_web" target="1.8" />
+      <module name="pinyougou_parent" target="1.8" />
+      <module name="pinyougou_pojo" target="1.8" />
+      <module name="pinyougou_sellergoods_interface" target="1.8" />
       <module name="pinyougou_sellergoods_service" target="1.7" />
-      <module name="pinyougou_sellergoods_servicew" target="1.7" />
-      <module name="pinyougou_shop_web" target="1.7" />
+      <module name="pinyougou_sellergoods_servicew" target="1.8" />
+      <module name="pinyougou_shop_web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

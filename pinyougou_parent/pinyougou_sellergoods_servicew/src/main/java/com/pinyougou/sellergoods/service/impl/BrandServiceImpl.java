@@ -32,11 +32,26 @@ public class BrandServiceImpl implements BrandService {
         return brandMapper.selectByExample(null);
     }
 
+    /**
+     * 分页查询
+     * @param pageNum 当前页
+     * @param pageSize 每页记录
+     * @return
+     */
     @Override
     public PageResult findPage(Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         Page<TbBrand> page = (Page<TbBrand>) brandMapper.selectByExample(null);
         return new PageResult(page.getTotal(),page.getResult());
+    }
+
+    /**
+     * 添加品牌
+     * @param tbBrand 品牌
+     */
+    @Override
+    public void add(TbBrand tbBrand) {
+        brandMapper.insert(tbBrand);
     }
 
 

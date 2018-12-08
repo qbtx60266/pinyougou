@@ -33,17 +33,29 @@
 					$scope.reloadList();
                 }
 			};
-
+			//页码变更操作
 			$scope.reloadList=function () {
 					$scope.findPage($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);//重新加载
             };
-
+			//分页查询
 			$scope.findPage=function (pageNum,pageSize) {
 				$http.get("../brand/findPage.do?pageNum="+pageNum+"&pageSize=" + pageSize).success(
 				    function (data) {
                         $scope.list = data.rows;//当前页数据
                         $scope.paginationConf.totalItems=data.total;//更新总记录
 
+                    }
+				)
+            };
+            //新增方法
+			$scope.add=function () {
+				$http.post("../brand/add.do",$scope.entity).success(
+				    function (data) {
+						if(data.success){
+							$scope.reloadList();
+						}else {
+							alert(data.message);
+						}
                     }
 				)
             }
@@ -66,7 +78,7 @@
                             <div class="pull-left">
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
+                                        <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ng-click="entity={}"><i class="fa fa-file-o"></i> 新建</button>
                                         <button type="button" class="btn btn-default" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>           
                                         <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
@@ -128,16 +140,16 @@
 			<table class="table table-bordered table-striped"  width="800px">
 		      	<tr>
 		      		<td>品牌名称</td>
-		      		<td><input  class="form-control" placeholder="品牌名称" >  </td>
+		      		<td><input  class="form-control" placeholder="品牌名称" ng-model="entity.name" >  </td>
 		      	</tr>		      	
 		      	<tr>
 		      		<td>首字母</td>
-		      		<td><input  class="form-control" placeholder="首字母">  </td>
+		      		<td><input  class="form-control" placeholder="首字母" ng-model="entity.firstChar">  </td>
 		      	</tr>		      	
 			 </table>				
 		</div>
 		<div class="modal-footer">						
-			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="add()">保存</button>
 			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
 		</div>
 	  </div>

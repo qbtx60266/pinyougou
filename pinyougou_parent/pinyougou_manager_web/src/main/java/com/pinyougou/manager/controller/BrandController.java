@@ -4,9 +4,8 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.sellergoods.service.BrandService;
 import entity.PageResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import entity.Result;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,9 +29,32 @@ public class BrandController {
         return brandService.findAll();
     }
 
+    /**
+     * 分页查询
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @RequestMapping("/findPage")
     public PageResult findPage(@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum,
                                @RequestParam(name = "pageSize",defaultValue = "10") Integer pageSize){
         return brandService.findPage(pageNum,pageSize);
     }
+
+    /**
+     * 新增方法
+     * @param tbBrand
+     * @return
+     */
+    @RequestMapping("/add")
+    public Result add(@RequestBody TbBrand tbBrand){
+        try {
+            brandService.add(tbBrand);
+            return new Result(true,"添加成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,"添加失败");
+        }
+    }
+
 }
