@@ -8,6 +8,7 @@ import entity.Result;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author FallingSkies
@@ -103,6 +104,15 @@ public class BrandController {
     @RequestMapping("/search")
     public PageResult search(@RequestBody TbBrand brand,Integer page,Integer rows){
         return brandService.findPage(brand,page,rows);
+    }
+
+    /**
+     * 返回下拉列表数据
+     * @return
+     */
+    @RequestMapping("selectOptionList")
+    public List<Map> selectOptionList(){
+        return brandService.selectOptionList();
     }
 
 }

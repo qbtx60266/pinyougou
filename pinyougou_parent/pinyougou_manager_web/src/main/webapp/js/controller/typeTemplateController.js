@@ -76,5 +76,9 @@ app.controller('typeTemplateController' ,function($scope,$controller   ,typeTemp
 			}			
 		);
 	}
-    
+
+
+	$scope.brandList={};
+
+
 });	

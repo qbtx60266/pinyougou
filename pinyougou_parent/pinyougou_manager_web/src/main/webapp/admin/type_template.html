@@ -21,14 +21,24 @@
 
 
 	<script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+
+
+
+
+
 	<!--分页组件-->
 	<link rel="stylesheet" href="../plugins/angularjs/pagination.css">
 	<script src="../plugins/angularjs/pagination.js"></script>
 
 	<script type="text/javascript" src="../js/base_pagination.js"></script>
+	<!--select2-->
+	<script type="text/javascript" src="../js/angular-select2.js"> </script>
 	<script type="text/javascript" src="../js/service/typeTemplateService.js"></script>
 	<script type="text/javascript" src="../js/controller/typeTemplateController.js"></script>
 	<script type="text/javascript" src="../js/controller/baseController.js"></script>
+
+
+
 
 </head>
 
@@ -128,7 +138,7 @@
 		      	<tr>
 		      		<td>关联品牌</td>
 		      		<td>
-		      			
+		      			<input select2 config="brandList" select2-model="entity.brandIds" multiple placeholder="选择品牌（可多选）" class="from-control">
 		      		</td>
 		      	</tr>
 		      	<tr>
