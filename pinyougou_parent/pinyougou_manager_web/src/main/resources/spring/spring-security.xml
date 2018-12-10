@@ -28,6 +28,7 @@
 		<headers>
 			<frame-options policy="SAMEORIGIN"/>
 		</headers>
+		<logout/>
 	</http>
 
 
