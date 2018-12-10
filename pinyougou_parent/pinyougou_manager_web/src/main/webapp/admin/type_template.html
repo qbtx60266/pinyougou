@@ -35,6 +35,7 @@
 	<script type="text/javascript" src="../js/angular-select2.js"> </script>
 	<script type="text/javascript" src="../js/service/typeTemplateService.js"></script>
 	<script type="text/javascript" src="../js/service/brandService.js"></script>
+	<script type="text/javascript" src="../js/service/specificationService.js"></script>
 	<script type="text/javascript" src="../js/controller/typeTemplateController.js"></script>
 	<script type="text/javascript" src="../js/controller/baseController.js"></script>
 
@@ -43,7 +44,7 @@
 
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="typeTemplateController" ng-init="findBrandList()">
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="typeTemplateController" ng-init="findBrandList();findSpecList()">
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
@@ -145,7 +146,7 @@
 		      	<tr>
 		      		<td>关联规格</td>
 		      		<td>
-	
+		      			<input select2 select2-model="entity.specIds" config="specList"  multiple placeholder="选择品牌（可多选）" class="form-control">
 		      		</td>
 		      	</tr>	
 		      	
