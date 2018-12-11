@@ -76,5 +76,13 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 			}			
 		);
 	}
+
+
+	//根据上级id查询商品分类列表
+	$scope.findByParentId=function (parentId) {
+		itemCatService.findByParentId(parentId).success(function (response) {
+			$scope.list=response;
+        })
+    }
     
 });	
