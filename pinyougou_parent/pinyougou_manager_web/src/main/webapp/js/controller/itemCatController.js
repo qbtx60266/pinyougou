@@ -114,5 +114,15 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 	$scope.parentId=0;
 
 
-    
+    $scope.typeList={data:[]};
+    //读取类型列表
+    $scope.findTypeList=function () {
+        itemCatService.selectTypeList().success(
+            function (response) {
+                $scope.typeList={data:response};
+            }
+        )
+    }
+
+
 });	

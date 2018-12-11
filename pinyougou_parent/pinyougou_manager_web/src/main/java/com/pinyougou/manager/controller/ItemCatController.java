@@ -1,6 +1,8 @@
 package com.pinyougou.manager.controller;
 import java.util.List;
+import java.util.Map;
 
+import com.pinyougou.sellergoods.service.TypeTemplateService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +23,9 @@ public class ItemCatController {
 
 	@Reference
 	private ItemCatService itemCatService;
+
+	@Reference
+	private TypeTemplateService typeTemplateService;
 	
 	/**
 	 * 返回全部列表
@@ -120,4 +125,15 @@ public class ItemCatController {
 	public List<TbItemCat> findByParentId(Long parentId){
 		return itemCatService.findByParentId(parentId);
 	}
+
+
+	/**
+	 * 返回类型列表
+	 * @return
+	 */
+	@RequestMapping("/selectTypeList")
+	public List<Map> selectTypeList(){
+		return typeTemplateService.selectTypeList();
+	}
+
 }
