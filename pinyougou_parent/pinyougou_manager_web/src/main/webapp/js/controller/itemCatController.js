@@ -26,7 +26,7 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 	$scope.findOne=function(id){
 		itemCatService.findOne(id).success(
 			function(response){
-				$scope.entity= response;					
+				$scope.entity= response;
 			}
 		);				
 	}
