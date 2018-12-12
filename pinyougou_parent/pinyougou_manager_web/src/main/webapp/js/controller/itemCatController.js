@@ -1,5 +1,5 @@
  //控制层 
-app.controller('itemCatController' ,function($scope,$controller   ,itemCatService){	
+app.controller('itemCatController' ,function($scope,$controller   ,itemCatService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -26,7 +26,8 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 	$scope.findOne=function(id){
 		itemCatService.findOne(id).success(
 			function(response){
-				$scope.entity= response;
+                $('[name="in_city"]').select2("data", {"id":response.itemCat.typeId, "text":response.text});
+                $scope.entity= response.itemCat;
 			}
 		);				
 	}

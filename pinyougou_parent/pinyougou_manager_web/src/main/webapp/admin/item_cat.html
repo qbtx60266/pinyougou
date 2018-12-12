@@ -92,7 +92,7 @@
 											  <span ng-if="grade!=3">
 		                                      	<button type="button" class="btn bg-olive btn-xs" ng-click="setGrade(grade+1);selectList(entity)" >查询下级</button>
 											  </span>
-		                                 	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.id)" >修改</button>
+		                                 	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="entity.specMsg='';findOne(entity.id)" >修改</button>
 		                                  </td>
 			                          </tr>
 
@@ -141,7 +141,7 @@
 		      	<tr>
 		      		<td>类型模板</td>
 		      		<td>	      		
-		      			<input select2 select2-model="entity.specMsg" config="typeList"  placeholder="商品类型模板" class="form-control" />
+		      			<input name="in_city" select2 select2-model="entity.specMsg" config="typeList"  placeholder="商品类型模板" class="form-control" />
 		      		</td>		      		      		
 		      	</tr>		      	
 			 </table>				

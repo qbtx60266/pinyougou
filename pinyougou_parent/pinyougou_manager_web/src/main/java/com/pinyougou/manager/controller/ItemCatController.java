@@ -1,7 +1,9 @@
 package com.pinyougou.manager.controller;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pinyougou.pojo.TbTypeTemplate;
 import com.pinyougou.sellergoods.service.TypeTemplateService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,8 +86,13 @@ public class ItemCatController {
 	 * @return
 	 */
 	@RequestMapping("/findOne")
-	public TbItemCat findOne(Long id){
-		return itemCatService.findOne(id);		
+	public Map findOne(Long id){
+		HashMap map = new HashMap();
+		TbItemCat itemCat = itemCatService.findOne(id);
+		TbTypeTemplate typeTemplate = typeTemplateService.findOne(itemCat.getTypeId());
+		map.put("itemCat",itemCat);
+		map.put("text",typeTemplate.getName());
+		return map;
 	}
 	
 	/**
