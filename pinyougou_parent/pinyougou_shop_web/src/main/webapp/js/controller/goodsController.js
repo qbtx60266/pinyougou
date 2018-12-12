@@ -109,5 +109,19 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService,up
 			$scope.itemCat1List=response;
         })
     }
-    
+
+    //查询二级商品分类列表
+    $scope.$watch('entity.goods.category1Id',function (newValue,oldValue) {
+        itemCatService.findByParentId(newValue).success(function (response) {
+            $scope.itemCat2List=response;
+        })
+    });
+
+
+    //查询三级商品分类列表
+    $scope.$watch('entity.goods.category2Id',function (newValue,oldValue) {
+        itemCatService.findByParentId(newValue).success(function (response) {
+            $scope.itemCat3List=response;
+        })
+    });
 });
