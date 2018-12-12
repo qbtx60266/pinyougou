@@ -95,5 +95,12 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService,up
     $scope.add_image_entity=function () {
 		$scope.entity.goodsDesc.itemImages.push($scope.image_entity);
     }
+
+
+
+    //从图片列表中删除
+	$scope.remove_image_entity=function (index) {
+        $scope.entity.goodsDesc.itemImages.splice(index,1);
+    }
     
-});	
+});
