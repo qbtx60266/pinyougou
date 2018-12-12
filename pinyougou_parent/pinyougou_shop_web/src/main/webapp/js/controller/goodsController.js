@@ -124,4 +124,12 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService,up
             $scope.itemCat3List=response;
         })
     });
+
+
+    //查询模板id
+    $scope.$watch('entity.goods.category3Id',function (newValue,oldValue) {
+    	itemCatService.findOne(newValue).success(function (response) {
+			$scope.entity.goods.typeTemplateId=response.typeId;
+        })
+    });
 });
