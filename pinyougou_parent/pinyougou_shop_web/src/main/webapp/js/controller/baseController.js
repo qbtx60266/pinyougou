@@ -42,5 +42,20 @@ app.controller("baseController",function ($scope) {
             value += json[i][key];
         }
         return value;
+    };
+
+
+    //判断list集合中某个属性是否存在
+    $scope.searchObjectByKey=function (list,key,keyValue) {
+        for (var i = 0; i < list.length; i ++){
+            if (list[i][key] == keyValue){
+                return list[i];
+            }
+        }
+        return null;
     }
+
+
+
+
 });

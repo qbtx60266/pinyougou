@@ -90,7 +90,7 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService,up
 
 
 
-    $scope.entity={goods:{},goodsDesc:{itemImages:[]}};
+    $scope.entity={goods:{},goodsDesc:{itemImages:[],specificationItems:[]}};
 	//将当前上传的图片实体传入图片列表
     $scope.add_image_entity=function () {
 		$scope.entity.goodsDesc.itemImages.push($scope.image_entity);
@@ -144,5 +144,24 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService,up
 			$scope.specList=response;
         });
     });
+
+
+
+    //产生一个存储变量得集合
+	$scope.updateSpecAttribute=function ($event,name,value) {
+		var object = $scope.searchObjectByKey($scope.entity.goodsDesc.specificationItems,'attributeName',name);
+		if (object != null){
+			if ($event.target.checked){
+				object.attributeValue.push(value);
+			}else {
+                object.attributeValue.splice(object.attributeValue.indexOf(object),1);
+                if (object.attributeValue.length==0){
+                	$scope.entity.goodsDesc.specificationItems.splice($scope.entity.goodsDesc.specificationItems.indexOf(object),1);
+				}
+			}
+		}else {
+            $scope.entity.goodsDesc.specificationItems.push({"attributeName":name,"attributeValue":[value]});
+		}
+    }
 
 });
