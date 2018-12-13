@@ -69,15 +69,36 @@ public class GoodsServiceImpl implements GoodsService {
 		goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());
 		goodsDescMapper.insert(goods.getGoodsDesc());
 		List<TbItem> itemList = goods.getItemList();
-		for (TbItem item : itemList) {
-			//构建标题 SPU名称+ 规格选项值
-			String title=goods.getGoods().getGoodsName();
-			Map<String,Object> map = JSON.parseObject(item.getSpec());
-			for (String key : map.keySet()) {
-				title += " " + map.get(key);
+		//判断是否启用规格
+		if ("1".equals(goods.getGoods().getIsEnableSpec())) {
+
+
+			for (TbItem item : itemList) {
+				//构建标题 SPU名称+ 规格选项值
+				String title = goods.getGoods().getGoodsName();
+				Map<String, Object> map = JSON.parseObject(item.getSpec());
+				for (String key : map.keySet()) {
+					title += " " + map.get(key);
+				}
+				item.setTitle(title);
+				setItemValues(goods,item);
+				itemMapper.insert(item);
 			}
-			item.setTitle(title);
-			//商品分类
+		}else {
+			//无启用规格
+			TbItem item = new TbItem();
+			item.setTitle(goods.getGoods().getGoodsName());
+			item.setPrice(goods.getGoods().getPrice());
+			item.setNum(99999);
+			item.setStatus("1");
+			item.setIsDefault("1");
+			setItemValues(goods,item);
+			item.setSpec("{}");
+			itemMapper.insert(item);
+		}
+	}
+		private void setItemValues(Goods goods,TbItem item){
+		//商品分类
 			item.setCategoryid(goods.getGoods().getCategory3Id());
 			//创建日期
 			item.setCreateTime(new Date());
@@ -95,13 +116,10 @@ public class GoodsServiceImpl implements GoodsService {
 			item.setSeller(sellerMapper.selectByPrimaryKey(goods.getGoods().getSellerId()).getNickName());
 			//图片地址
 			List<Map> imageList = JSON.parseArray(goods.getGoodsDesc().getItemImages(), Map.class);
-			if (imageList.size()>0){
-				item.setImage((String)imageList.get(0).get("url"));
+			if (imageList.size() > 0) {
+				item.setImage((String) imageList.get(0).get("url"));
 			}
-			itemMapper.insert(item);
 		}
-	}
-
 	
 	/**
 	 * 修改
