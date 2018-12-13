@@ -175,7 +175,7 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService,up
 		}
     };
 
-
+	//增添列的方法
     addColumn=function (list,columnName,columnValues) {
 		var newList=[];
 
