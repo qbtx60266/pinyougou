@@ -21,13 +21,15 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 			}			
 		);
 	}
-	
+	$scope.entity={};
+    $scope.entity.specMsg={"data":[]};
 	//查询实体 
 	$scope.findOne=function(id){
 		itemCatService.findOne(id).success(
 			function(response){
-                $('[name="in_city"]').select2("data", {"id":response.itemCat.typeId, "text":response.text});
                 $scope.entity= response.itemCat;
+                // $('[name="in_city"]').select2("data", {"id":response.itemCat.typeId, "text":response.text});
+                $scope.entity.specMsg={"id":response.itemCat.typeId, "text":response.text};
 			}
 		);				
 	}
