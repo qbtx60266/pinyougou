@@ -126,13 +126,16 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 			$scope.itemCat1List=response;
         })
     }
-
+	$scope.tempCategory1=1;
+	$scope.tempCategory2=1;
     //查询二级商品分类列表
     $scope.$watch('entity.goods.category1Id',function (newValue,oldValue) {
         itemCatService.findByParentId(newValue).success(function (response) {
-            if ($location.search()['id']==null){
+            if ($location.search()['id']==null || $scope.tempCategory1 > 1){
             	$scope.entity.goods.category2Id={};
+            	$scope.entity.goods.category3Id={};
 			}
+			$scope.tempCategory1 ++;
             $scope.itemCat2List=response;
         })
     });
@@ -141,9 +144,10 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
     //查询三级商品分类列表
     $scope.$watch('entity.goods.category2Id',function (newValue,oldValue) {
         itemCatService.findByParentId(newValue).success(function (response) {
-            if ($location.search()['id']==null){
+            if ($location.search()['id']==null || $scope.tempCategory2 > 1){
                 $scope.entity.goods.category3Id={};
             }
+            $scope.tempCategory2 ++;
             $scope.itemCat3List=response;
         })
     });
