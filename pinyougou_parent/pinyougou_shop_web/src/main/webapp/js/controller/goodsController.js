@@ -31,6 +31,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
             goodsService.findOne(id).success(
                 function (response) {
                     $scope.entity = response;
+                    editor.html($scope.entity.goodsDesc.introduction);
                 }
             );
         }
