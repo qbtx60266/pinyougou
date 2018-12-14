@@ -31,7 +31,12 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
             goodsService.findOne(id).success(
                 function (response) {
                     $scope.entity = response;
+                    //商品介绍
                     editor.html($scope.entity.goodsDesc.introduction);
+                    //商品图片
+                    $scope.entity.goodsDesc.itemImages=JSON.parse($scope.entity.goodsDesc.itemImages);
+                    //扩展属性
+                    $scope.entity.goodsDesc.customAttributeItems=JSON.parse($scope.entity.goodsDesc.customAttributeItems);
                 }
             );
         }
@@ -119,7 +124,9 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
     //查询二级商品分类列表
     $scope.$watch('entity.goods.category1Id',function (newValue,oldValue) {
         itemCatService.findByParentId(newValue).success(function (response) {
-            $scope.entity.goods.category2Id={};
+            if ($location.search()['id']==null){
+            	$scope.entity.goods.category2Id={};
+			}
             $scope.itemCat2List=response;
         })
     });
@@ -128,7 +135,9 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
     //查询三级商品分类列表
     $scope.$watch('entity.goods.category2Id',function (newValue,oldValue) {
         itemCatService.findByParentId(newValue).success(function (response) {
-            $scope.entity.goods.category3Id={};
+            if ($location.search()['id']==null){
+                $scope.entity.goods.category3Id={};
+            }
             $scope.itemCat3List=response;
         })
     });
@@ -146,7 +155,10 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 		typeTemplateService.findOne(newValue).success(function (response) {
 			$scope.typeTemplate=response;//模板对象
 			$scope.typeTemplate.brandIds=JSON.parse($scope.typeTemplate.brandIds);//品牌列表转换
-			$scope.entity.goodsDesc.customAttributeItems=JSON.parse($scope.typeTemplate.customAttributeItems);//扩展信息转换
+			//如果增加商品
+			if ($location.search()['id']==null){
+				$scope.entity.goodsDesc.customAttributeItems=JSON.parse($scope.typeTemplate.customAttributeItems);//扩展信息转换
+			}
         });
 		typeTemplateService.findSpecList(newValue).success(function (response) {
 			$scope.specList=response;
