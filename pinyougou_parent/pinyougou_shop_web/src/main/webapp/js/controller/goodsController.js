@@ -119,6 +119,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
     //查询二级商品分类列表
     $scope.$watch('entity.goods.category1Id',function (newValue,oldValue) {
         itemCatService.findByParentId(newValue).success(function (response) {
+            $scope.entity.goods.category2Id={};
             $scope.itemCat2List=response;
         })
     });
@@ -127,6 +128,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
     //查询三级商品分类列表
     $scope.$watch('entity.goods.category2Id',function (newValue,oldValue) {
         itemCatService.findByParentId(newValue).success(function (response) {
+            $scope.entity.goods.category3Id={};
             $scope.itemCat3List=response;
         })
     });
