@@ -37,6 +37,8 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
                     $scope.entity.goodsDesc.itemImages=JSON.parse($scope.entity.goodsDesc.itemImages);
                     //扩展属性
                     $scope.entity.goodsDesc.customAttributeItems=JSON.parse($scope.entity.goodsDesc.customAttributeItems);
+                    //规格选择
+                    $scope.entity.goodsDesc.specificationItems = JSON.parse($scope.entity.goodsDesc.specificationItems);
                 }
             );
         }
@@ -223,6 +225,23 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 				$scope.itemCatList[response[i].id]=response[i].name;
 			}
         })
+    }
+
+    $scope.checkAttributeValue=function (specName,optionName) {
+    	var items = $scope.entity.goodsDesc.specificationItems;
+    	var object = $scope.searchObjectByKey(items,'attributeName',specName);
+		if (object == null){
+			return false;
+		}else {
+			if (object.attributeValue.indexOf(optionName) >= 0){
+				return true;
+			}else {
+				return false;
+			}
+		}
+		
+
+
     }
 
 });
