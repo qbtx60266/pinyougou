@@ -66,6 +66,14 @@ public class GoodsServiceImpl implements GoodsService {
 		goodsMapper.insert(goods.getGoods());
 		goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());
 		goodsDescMapper.insert(goods.getGoodsDesc());
+		saveItemList(goods);
+
+	}
+
+	/**
+	 * 插入SKU列表数据
+	 */
+	private void saveItemList(Goods goods){
 		List<TbItem> itemList = goods.getItemList();
 		//判断是否启用规格
 		if ("1".equals(goods.getGoods().getIsEnableSpec())) {
@@ -95,6 +103,8 @@ public class GoodsServiceImpl implements GoodsService {
 			itemMapper.insert(item);
 		}
 	}
+
+
 		private void setItemValues(Goods goods,TbItem item){
 		//商品分类
 			item.setCategoryid(goods.getGoods().getCategory3Id());
@@ -123,9 +133,18 @@ public class GoodsServiceImpl implements GoodsService {
 	 * 修改
 	 */
 	@Override
-	public void update(TbGoods goods){
-		goodsMapper.updateByPrimaryKey(goods);
-	}	
+	public void update(Goods goods){
+		//更新基本表
+		goodsMapper.updateByPrimaryKey(goods.getGoods());
+		//更新扩展表
+		goodsDescMapper.updateByPrimaryKey(goods.getGoodsDesc());
+		//删除原有的SKU表数据
+		TbItemExample example = new TbItemExample();
+		example.createCriteria().andGoodsIdEqualTo(goods.getGoods().getId());
+		itemMapper.deleteByExample(example);
+		//添加新的SKU表数据
+		saveItemList(goods);
+	}
 	
 	/**
 	 * 根据ID获取实体
