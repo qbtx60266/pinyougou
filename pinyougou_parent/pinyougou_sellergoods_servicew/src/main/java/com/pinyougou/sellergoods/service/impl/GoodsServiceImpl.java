@@ -6,15 +6,12 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.pinyougou.mapper.*;
-import com.pinyougou.pojo.TbGoodsDesc;
-import com.pinyougou.pojo.TbItem;
+import com.pinyougou.pojo.*;
 import com.pinyougou.pojogroup.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.pinyougou.pojo.TbGoods;
-import com.pinyougou.pojo.TbGoodsExample;
 import com.pinyougou.pojo.TbGoodsExample.Criteria;
 import com.pinyougou.sellergoods.service.GoodsService;
 
@@ -145,7 +142,11 @@ public class GoodsServiceImpl implements GoodsService {
 		//商品扩展表
 		TbGoodsDesc tbGoodsDesc = goodsDescMapper.selectByPrimaryKey(id);
 		goods.setGoodsDesc(tbGoodsDesc);
-
+		//读取SKU列表
+		TbItemExample example = new TbItemExample();
+		example.createCriteria().andGoodsIdEqualTo(id);
+		List<TbItem> itemList = itemMapper.selectByExample(example);
+		goods.setItemList(itemList);
 		return goods;
 	}
 
