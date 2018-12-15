@@ -58,5 +58,12 @@ public interface GoodsService {
 	 * @return
 	 */
 	public PageResult findPage(TbGoods goods, int pageNum, int pageSize);
+
+	/**
+	 * 运营商批量修改状态
+	 * @param ids
+	 * @param status
+	 */
+	void updateStatus(Long[] ids,String status);
 	
 }
