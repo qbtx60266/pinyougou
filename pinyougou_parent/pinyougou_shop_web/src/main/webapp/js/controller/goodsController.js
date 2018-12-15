@@ -62,9 +62,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
             function(response){
                 if(response.success){
                     alert("保存成功");
-                    $scope.entity={};
-                    //清空富文本编辑器
-                    editor.html("");
+                    location.href="goods.html";
                 }else{
                     alert(response.message);
                 }
@@ -91,7 +89,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 	}
 	
 	$scope.searchEntity={};//定义搜索对象 
-	
+
 	//搜索
 	$scope.search=function(page,rows){			
 		goodsService.search(page,rows,$scope.searchEntity).success(
