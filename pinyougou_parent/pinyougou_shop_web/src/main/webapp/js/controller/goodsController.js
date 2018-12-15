@@ -256,9 +256,20 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 				return false;
 			}
 		}
-		
-
-
+    }
+    
+    
+    //批量修改上下架状态
+	$scope.updateMarketable=function (marketable) {
+		goodsService.updateMarketable($scope.selectIds,marketable).success(function (response) {
+			if (response.success){
+				alert(response.message);
+				$scope.reloadList();
+                $scope.selectIds=[];
+			}else {
+				alert(response.message);
+			}
+        })
     }
 
 });

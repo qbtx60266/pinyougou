@@ -63,6 +63,7 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public void add(Goods goods) {
 		goods.getGoods().setAuditStatus("0");
+		goods.getGoods().setIsMarketable("1");
 		goodsMapper.insert(goods.getGoods());
 		goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());
 		goodsDescMapper.insert(goods.getGoodsDesc());
@@ -232,6 +233,20 @@ public class GoodsServiceImpl implements GoodsService {
 		for (Long id : ids) {
 			TbGoods goods = goodsMapper.selectByPrimaryKey(id);
 			goods.setAuditStatus(status);
+			goodsMapper.updateByPrimaryKey(goods);
+		}
+	}
+
+	/**
+	 * 批量修改上下架状态
+	 * @param ids
+	 * @param marketable
+	 */
+	@Override
+	public void updateMarketable(Long[] ids,String marketable){
+		for (Long id : ids) {
+			TbGoods goods = goodsMapper.selectByPrimaryKey(id);
+			goods.setIsMarketable(marketable);
 			goodsMapper.updateByPrimaryKey(goods);
 		}
 	}
