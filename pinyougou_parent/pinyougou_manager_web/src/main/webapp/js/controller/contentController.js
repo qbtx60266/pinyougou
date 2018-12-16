@@ -100,5 +100,9 @@ app.controller('contentController' ,function($scope,$controller,contentService,u
 			$scope.contentCategoryList=response;
         })
     }
+
+
+    //状态集合
+	$scope.status=['无效','有效'];
     
 });	
