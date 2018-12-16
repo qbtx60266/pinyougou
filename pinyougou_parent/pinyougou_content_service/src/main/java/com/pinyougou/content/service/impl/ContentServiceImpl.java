@@ -11,6 +11,8 @@ import com.pinyougou.pojo.TbContentExample.Criteria;
 import com.pinyougou.content.service.ContentService;
 
 import entity.PageResult;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 服务实现层
@@ -18,10 +20,14 @@ import entity.PageResult;
  *
  */
 @Service
+@Transactional
 public class ContentServiceImpl implements ContentService {
 
 	@Autowired
 	private TbContentMapper contentMapper;
+
+	@Autowired
+	private RedisTemplate redisTemplate;
 	
 	/**
 	 * 查询全部
@@ -113,11 +119,16 @@ public class ContentServiceImpl implements ContentService {
 	 */
 	@Override
 	public List<TbContent> findByCategoryId(Long categoryId) {
-		TbContentExample example = new TbContentExample();
-		example.createCriteria().andCategoryIdEqualTo(categoryId).andStatusEqualTo("1");
-		//排序
-		example.setOrderByClause("sort_order");
-		return contentMapper.selectByExample(example);
+		List<TbContent> list =(List<TbContent>) redisTemplate.boundHashOps("content").get(categoryId);
+		if(list==null){
+			TbContentExample example = new TbContentExample();
+			example.createCriteria().andCategoryIdEqualTo(categoryId).andStatusEqualTo("1");
+			//排序
+			example.setOrderByClause("sort_order");
+			list = contentMapper.selectByExample(example);
+			redisTemplate.boundHashOps("content").put(categoryId,list);
+		}
+		return list;
 	}
 
 }
