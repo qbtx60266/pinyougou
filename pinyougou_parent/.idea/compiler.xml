@@ -8,6 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="generatorSqlmapCustom" />
         <module name="pinyougou_common" />
+        <module name="pinyougou_content_interface" />
+        <module name="pinyougou_content_service" />
         <module name="pinyougou_dao" />
         <module name="pinyougou_manager_web" />
         <module name="pinyougou_pojo" />
@@ -19,6 +21,8 @@
     <bytecodeTargetLevel>
       <module name="generatorSqlmapCustom" target="1.5" />
       <module name="pinyougou_common" target="1.8" />
+      <module name="pinyougou_content_interface" target="1.8" />
+      <module name="pinyougou_content_service" target="1.8" />
       <module name="pinyougou_dao" target="1.8" />
       <module name="pinyougou_manager_web" target="1.8" />
       <module name="pinyougou_parent" target="1.8" />
