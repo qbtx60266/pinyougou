@@ -171,6 +171,8 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 
 	//根据模板id确定品牌列表 扩展属性 规格列表
     $scope.$watch('entity.goods.typeTemplateId',function (newValue,oldValue) {
+        $scope.entity.goodsDesc.specificationItems=[];
+        $scope.entity.itemList=[];
 		typeTemplateService.findOne(newValue).success(function (response) {
 			$scope.typeTemplate=response;//模板对象
 			$scope.typeTemplate.brandIds=JSON.parse($scope.typeTemplate.brandIds);//品牌列表转换

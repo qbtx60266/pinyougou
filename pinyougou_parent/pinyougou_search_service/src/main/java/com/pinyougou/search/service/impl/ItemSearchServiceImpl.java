@@ -30,7 +30,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         Criteria criteria = new Criteria("item_keywords").is(searchMap.get("keywords"));
         query.addCriteria(criteria);
         ScoredPage<TbItem> page = solrTemplate.queryForPage(query, TbItem.class);
-        map.put("rows",page);
+        map.put("rows",page.getContent());
         return map;
     }
 }
