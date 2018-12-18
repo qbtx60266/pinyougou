@@ -22,6 +22,8 @@ app.controller("searchController",function ($scope,searchService) {
             $scope.searchMap.spec[key] = value;
 
         }
+        //查询
+        $scope.search();
     }
 
     //撤销搜索项方法
