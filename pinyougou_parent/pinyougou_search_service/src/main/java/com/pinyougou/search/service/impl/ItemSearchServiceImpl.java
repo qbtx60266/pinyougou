@@ -6,6 +6,7 @@ import com.pinyougou.search.service.ItemSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
+import org.springframework.data.solr.core.query.result.GroupPage;
 import org.springframework.data.solr.core.query.result.HighlightEntry;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.data.solr.core.query.result.ScoredPage;
@@ -78,5 +79,28 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
         map.put("rows",page.getContent());
         return map;
+    }
+
+    /**
+     * 分组查询(查询商品分类列表)
+     * @return
+     */
+    private List searchCategory(Map searchMap){
+
+
+        Query query = new SimpleQuery("*:*");
+        //等效于关键字查询where
+        Criteria criteria = new Criteria("item_keywords").is(searchMap.get("keywords"));
+        query.addCriteria(criteria);
+
+        //group by设置分组选项
+        GroupOptions groupOptions = new GroupOptions().addGroupByField("item_category");
+        query.setGroupOptions(groupOptions);
+
+        //获取分组页
+        GroupPage<TbItem> page = solrTemplate.queryForGroupPage(query, TbItem.class);
+
+        return null;
+
     }
 }
