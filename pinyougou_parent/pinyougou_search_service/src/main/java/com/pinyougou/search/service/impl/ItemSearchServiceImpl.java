@@ -4,13 +4,12 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.search.service.ItemSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
-import org.springframework.data.solr.core.query.result.GroupPage;
-import org.springframework.data.solr.core.query.result.HighlightEntry;
-import org.springframework.data.solr.core.query.result.HighlightPage;
-import org.springframework.data.solr.core.query.result.ScoredPage;
+import org.springframework.data.solr.core.query.result.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +36,11 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
         //查询列表
         map.putAll(searchList(searchMap));
+
+
+        //分组查询商品分类列表
+        List<String> categoryList = searchCategory(searchMap);
+        map.put("categoryList",categoryList);
         return map;
     }
 
@@ -85,8 +89,8 @@ public class ItemSearchServiceImpl implements ItemSearchService {
      * 分组查询(查询商品分类列表)
      * @return
      */
-    private List searchCategory(Map searchMap){
-
+    private List<String> searchCategory(Map searchMap){
+        List<String> list = new ArrayList<>();
 
         Query query = new SimpleQuery("*:*");
         //等效于关键字查询where
@@ -100,7 +104,19 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         //获取分组页
         GroupPage<TbItem> page = solrTemplate.queryForGroupPage(query, TbItem.class);
 
-        return null;
+        //获取分组结果对象
+        GroupResult<TbItem> groupResult = page.getGroupResult("item_category");
 
+        //获取分组入口页
+        Page<GroupEntry<TbItem>> groupEntries = groupResult.getGroupEntries();
+
+        //获取分组入口集合
+        List<GroupEntry<TbItem>> entryList = groupEntries.getContent();
+
+        for (GroupEntry<TbItem> entry : entryList) {
+            //将分组的结果添加到返回值中
+            list.add(entry.getGroupValue());
+        }
+        return list;
     }
 }
