@@ -137,7 +137,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
     private Map searchBrandAndSpecList(String category){
         Map map = new HashMap();
         //根据商品分类名称得到模板ID
-        Long templateId = (Long) redisTemplate.boundHashOps("itemCat").get("category");
+        Long templateId = (Long) redisTemplate.boundHashOps("itemCat").get(category);
         if (templateId != null){
             //根据模板ID获取品牌列表
             List brandList = (List) redisTemplate.boundHashOps("brandList").get(templateId);
