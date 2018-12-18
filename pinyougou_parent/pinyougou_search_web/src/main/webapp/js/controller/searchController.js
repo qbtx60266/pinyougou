@@ -11,4 +11,16 @@ app.controller("searchController",function ($scope,searchService) {
             $scope.resultMap=response;
         })
     }
+
+    //添加搜索项方法
+    $scope.addSearchItem=function (key, value) {
+        //点击分类或品牌
+        if (key == 'category' || key == 'brand'){
+            $scope.searchMap[key]=value;
+        }else {
+            //点击规格
+            $scope.searchMap.spec[key] = value;
+
+        }
+    }
 })
