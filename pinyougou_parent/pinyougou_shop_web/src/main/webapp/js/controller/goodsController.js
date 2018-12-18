@@ -171,8 +171,10 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 
 	//根据模板id确定品牌列表 扩展属性 规格列表
     $scope.$watch('entity.goods.typeTemplateId',function (newValue,oldValue) {
-        $scope.entity.goodsDesc.specificationItems=[];
-        $scope.entity.itemList=[];
+        if ($location.search()['id']==null ) {
+            $scope.entity.goodsDesc.specificationItems = [];
+            $scope.entity.itemList = [];
+        }
 		typeTemplateService.findOne(newValue).success(function (response) {
 			$scope.typeTemplate=response;//模板对象
 			$scope.typeTemplate.brandIds=JSON.parse($scope.typeTemplate.brandIds);//品牌列表转换
@@ -209,7 +211,11 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
     //创建SKU列表
     $scope.createItemList=function () {
 		//列表初始化
-		$scope.entity.itemList=[{spec:{},price:0,num:99999,status:'0',isDefault:'0'}];
+		if ($scope.entity.goodsDesc.specificationItems.length>0){
+			$scope.entity.itemList=[{spec:{},price:0,num:99999,status:'0',isDefault:'0'}];
+		}else {
+            $scope.entity.itemList=[];
+		}
 		var items=$scope.entity.goodsDesc.specificationItems;
 		for (var i = 0; i <items.length;i ++){
             $scope.entity.itemList=addColumn($scope.entity.itemList,items[i].attributeName,items[i].attributeValue);
