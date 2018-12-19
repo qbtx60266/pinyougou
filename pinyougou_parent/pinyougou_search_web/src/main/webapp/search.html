@@ -182,12 +182,12 @@
 					</div>
 					<div class="fl ext"></div>
 				</div>
-				<div class="type-wrap logo" ng-if="resultMap.brandList != null ">
+				<div class="type-wrap logo" ng-if="resultMap.brandList != null && keywordsIsBrand()== false">
 					<div class="fl key brand">品牌</div>
 					<div class="value logos">
 						<ul class="logo-list">
 							<li ng-repeat="brand in resultMap.brandList" ng-if="searchMap.brand != brand.text">
-								<a href="#" ng-click="addSearchItem('brand',brand.text)"  >{{brand.text}}</a>
+								<button style="height: 100%;width: 100%;" ng-click="addSearchItem('brand',brand.text)"  >{{brand.text}}</button>
 							</li>
 	
 						</ul>
@@ -275,7 +275,7 @@
 								<a href="#">销量</a>
 							</li>
 							<li>
-								<a href="#">新品</a>
+								<a href="#" ng-click="sortSearch('updatetime','DESC')">新品</a>
 							</li>
 							<li>
 								<a href="#">评价</a>
