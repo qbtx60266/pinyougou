@@ -5,6 +5,7 @@ import com.pinyougou.pojo.TbItem;
 import com.pinyougou.search.service.ItemSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
@@ -37,6 +38,11 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 //        ScoredPage<TbItem> page = solrTemplate.queryForPage(query, TbItem.class);
 //        map.put("rows",page.getContent());
         //高亮显示
+
+
+        //空格处理
+        String keywords = (String) searchMap.get("keywords");
+        searchMap.put("keywords",keywords.replace(" ",""));
 
         //查询列表
         map.putAll(searchList(searchMap));
@@ -140,6 +146,23 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         }
         query.setOffset((pageNo - 1) * pageSize);
         query.setRows(pageSize);
+
+
+
+        //价格排序
+        String sortValue = (String) searchMap.get("sort");
+        if (sortValue != null && !sortValue.equals("")){
+            String sortField = (String) searchMap.get("sortField");
+            Sort sort = null;
+            if (sortValue.equals("ASC")){
+                sort = new Sort(Sort.Direction.ASC,"item_" + sortField);
+            }else {
+                sort = new Sort(Sort.Direction.DESC,"item_" + sortField);
+            }
+            query.addSort(sort);
+        }
+
+
 
 
         //***************获取高亮结果集**************************
