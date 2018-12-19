@@ -129,8 +129,17 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         }
 
 
-
-
+        //分页
+        Integer pageNo = (Integer) searchMap.get("pageNo");
+        if (pageNo==null){
+            pageNo = 1;
+        }
+        Integer pageSize = (Integer) searchMap.get("pageSize");
+        if (pageSize == null){
+            pageSize = 20;
+        }
+        query.setOffset((pageNo - 1) * pageSize);
+        query.setRows(pageSize);
 
 
         //***************获取高亮结果集**************************
@@ -152,6 +161,10 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         }
 
         map.put("rows",page.getContent());
+        //总页数
+        map.put("totalPages",page.getTotalPages());
+        //总记录数
+        map.put("total",page.getTotalElements());
         return map;
     }
 
