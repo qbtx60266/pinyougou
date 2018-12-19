@@ -154,10 +154,10 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         if (sortValue != null && !sortValue.equals("")){
             String sortField = (String) searchMap.get("sortField");
             Sort sort = null;
-            if (sortValue.equals("ASC")){
-                sort = new Sort(Sort.Direction.ASC,"item_" + sortField);
-            }else {
+            if (sortValue.equals("DESC")){
                 sort = new Sort(Sort.Direction.DESC,"item_" + sortField);
+            }else {
+                sort = new Sort(Sort.Direction.ASC,"item_" + sortField);
             }
             query.addSort(sort);
         }

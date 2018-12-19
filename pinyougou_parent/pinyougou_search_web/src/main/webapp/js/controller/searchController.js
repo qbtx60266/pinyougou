@@ -80,4 +80,12 @@ app.controller("searchController",function ($scope,searchService) {
         $scope.searchMap.pageNo = pageNo;
         $scope.search();
     }
+
+    //排序查询
+    $scope.sortSearch=function (sortField,sort) {
+        $scope.searchMap.sortField=sortField;
+        $scope.searchMap.sort=sort;
+        $scope.search();
+
+    }
 })
