@@ -10,6 +10,7 @@ app.controller("searchController",function ($scope,searchService) {
         $scope.searchMap.pageNo = parseInt($scope.searchMap.pageNo);
         searchService.search($scope.searchMap).success(function (response) {
             $scope.resultMap=response;
+
             buildPageLabel();
         })
     }
