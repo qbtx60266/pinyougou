@@ -36,5 +36,7 @@ app.controller("searchController",function ($scope,searchService) {
             delete $scope.searchMap.spec[key];
 
         }
+        //查询
+        $scope.search();
     }
 })
