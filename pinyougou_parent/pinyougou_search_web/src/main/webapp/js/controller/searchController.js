@@ -1,7 +1,7 @@
-app.controller("searchController",function ($scope,searchService) {
+app.controller("searchController",function ($scope,searchService,$location) {
 
     //定义搜索对象的结构
-    $scope.searchMap={'keyword':'','category':'','brand':'','spec':{},'price':'','pageNo':1,'pageSize':40,'sort':'','sortField':''};
+    $scope.searchMap={'keywords':'','category':'','brand':'','spec':{},'price':'','pageNo':1,'pageSize':40,'sort':'','sortField':''};
 
 
 
@@ -97,5 +97,12 @@ app.controller("searchController",function ($scope,searchService) {
             }
         }
         return false;
+    }
+
+
+    //接收参数进行查询
+    $scope.loadKeywords=function () {
+        $scope.searchMap.keywords =  $location.search()['keywords'];
+        $scope.search();
     }
 })
