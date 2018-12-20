@@ -48,7 +48,7 @@ public class ItemPageServiceImpl implements ItemPageService {
             //商品扩展表数据
             TbGoodsDesc goodsDesc = goodsDescMapper.selectByPrimaryKey(goodsId);
             dataModel.put("goodsDesc",goodsDesc);
-
+            //设置输出流字符集
             Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pagedir + goodsId +".html"),"UTF-8"));
 //            Writer out = new FileWriter(pagedir + goodsId +".html");
 
