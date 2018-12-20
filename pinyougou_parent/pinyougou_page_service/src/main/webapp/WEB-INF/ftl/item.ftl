@@ -19,6 +19,9 @@
 
 <!--页面顶部 开始-->
 <#include "head.ftl">
+<#assign imageList=goodsDesc.itemImages?eval>
+
+
 <!--页面顶部 结束-->
 	<div class="py-container">
 		<div id="item">
@@ -43,7 +46,12 @@
 					<div class="zoom">
 						<!--默认第一个预览-->
 						<div id="preview" class="spec-preview">
-							<span class="jqzoom"><img jqimg="img/_/b1.png" src="img/_/s1.png" /></span>
+							<span class="jqzoom">
+								<#if (imageList?size>0)>
+									<img jqimg="${imageList[0].url}" src="${imageList[0].url}" width="400px" height="400px"/>
+								</#if>
+
+							</span>
 						</div>
 						<!--下方的缩略图-->
 						<div class="spec-scroll">
@@ -51,15 +59,10 @@
 							<!--左右按钮-->
 							<div class="items">
 								<ul>
-									<li><img src="img/_/s1.png" bimg="img/_/b1.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s2.png" bimg="img/_/b2.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s3.png" bimg="img/_/b3.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s1.png" bimg="img/_/b1.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s2.png" bimg="img/_/b2.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s3.png" bimg="img/_/b3.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s1.png" bimg="img/_/b1.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s2.png" bimg="img/_/b2.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s3.png" bimg="img/_/b3.png" onmousemove="preview(this)" /></li>
+									<#list imageList as item>
+									<li><img src="${item.url}" bimg="${item.url}" onmousemove="preview(this)" /></li>
+									</#list>
+
 								</ul>
 							</div>
 							<a class="next">&gt;</a>
