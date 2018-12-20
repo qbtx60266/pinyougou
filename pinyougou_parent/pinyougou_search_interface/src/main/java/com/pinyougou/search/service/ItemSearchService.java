@@ -14,4 +14,11 @@ public interface ItemSearchService {
      * @return
      */
     public Map search(Map searchMap);
+
+
+    /**
+     * 导入列表
+     * @param list
+     */
+    void importList(List list);
 }

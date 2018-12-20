@@ -66,6 +66,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         return map;
     }
 
+
     /**
      * 实现高亮
      * @param searchMap
@@ -245,4 +246,12 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         }
         return map;
     }
+
+
+    @Override
+    public void importList(List list) {
+        solrTemplate.saveBeans(list);
+        solrTemplate.commit();
+    }
+
 }
