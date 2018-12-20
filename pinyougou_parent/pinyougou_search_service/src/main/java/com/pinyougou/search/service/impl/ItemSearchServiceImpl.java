@@ -254,4 +254,18 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         solrTemplate.commit();
     }
 
+    /**
+     * 根据传入id集合删除索引库
+     * @param goodsIds SPU
+     */
+    @Override
+    public void deleteByGoodsIds(List goodsIds) {
+        SolrDataQuery query = new SimpleQuery("");
+
+        Criteria criteria = new Criteria("item_goodsid").in(goodsIds);
+        query.addCriteria(criteria);
+        solrTemplate.delete(query);
+        solrTemplate.commit();
+    }
+
 }
