@@ -122,7 +122,9 @@ public class GoodsController {
 				//得到需要导入的SKU列表
 				List<TbItem> itemList = goodsService.findItemListByGoodsIdListAndStatus(ids, status);
 				//导入到solr
-				itemSearchService.importList(itemList);
+				if (itemList != null && itemList.size() > 0){
+					itemSearchService.importList(itemList);
+				}
 
 
 				//生成商品详细页
