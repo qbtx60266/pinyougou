@@ -2,9 +2,13 @@ package com.pinyougou.manager.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
 import com.pinyougou.page.service.ItemPageService;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojogroup.Goods;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +18,12 @@ import com.pinyougou.sellergoods.service.GoodsService;
 
 import entity.PageResult;
 import entity.Result;
+
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+
 /**
  * controller
  * @author Administrator
@@ -30,6 +40,10 @@ public class GoodsController {
 //	private ItemSearchService itemSearchService;
 	@Reference(timeout = 100000)
 	private ItemPageService itemPageService;
+	@Autowired
+	private JmsTemplate jmsTemplate;
+	@Autowired
+	private Destination queueSolrDestination;
 	
 	/**
 	 * 返回全部列表
@@ -124,6 +138,16 @@ public class GoodsController {
 //				if (itemList != null && itemList.size() > 0){
 //					itemSearchService.importList(itemList);
 //				}
+
+				//转换为JSON传输
+				final String jsonString = JSON.toJSONString(itemList);
+
+				jmsTemplate.send(queueSolrDestination, new MessageCreator() {
+					@Override
+					public Message createMessage(Session session) throws JMSException {
+						return session.createTextMessage(jsonString);
+					}
+				});
 
 
 				//生成商品详细页
