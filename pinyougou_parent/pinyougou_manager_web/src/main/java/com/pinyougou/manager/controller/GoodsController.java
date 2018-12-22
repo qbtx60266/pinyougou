@@ -49,6 +49,9 @@ public class GoodsController {
 
 	@Autowired
 	private Destination topicPageDestination;
+
+	@Autowired
+	private Destination topicPageDeleteDestination;
 	
 	/**
 	 * 返回全部列表
@@ -112,6 +115,15 @@ public class GoodsController {
 					return session.createObjectMessage(ids);
 				}
 			});
+
+			//删除每个服务器上的商品详细页
+			jmsTemplate.send(topicPageDeleteDestination, new MessageCreator() {
+				@Override
+				public Message createMessage(Session session) throws JMSException {
+					return session.createObjectMessage(ids);
+				}
+			});
+
 			return new Result(true, "删除成功"); 
 		} catch (Exception e) {
 			e.printStackTrace();
