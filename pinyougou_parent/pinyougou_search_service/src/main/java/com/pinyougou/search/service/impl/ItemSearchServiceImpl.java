@@ -260,7 +260,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
      */
     @Override
     public void deleteByGoodsIds(List goodsIds) {
-        SolrDataQuery query = new SimpleQuery("");
+        SolrDataQuery query = new SimpleQuery("*:*");
 
         Criteria criteria = new Criteria("item_goodsid").in(goodsIds);
         query.addCriteria(criteria);
