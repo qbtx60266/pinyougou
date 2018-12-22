@@ -44,6 +44,9 @@ public class GoodsController {
 	private JmsTemplate jmsTemplate;
 	@Autowired
 	private Destination queueSolrDestination;
+
+	@Autowired
+	private Destination queueSolrDeleteDestination;
 	
 	/**
 	 * 返回全部列表
@@ -97,10 +100,16 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/delete")
-	public Result delete(Long [] ids){
+	public Result delete(final Long [] ids){
 		try {
 			goodsService.delete(ids);
 			//itemSearchService.deleteByGoodsIds(Arrays.asList(ids));
+			jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
+				@Override
+				public Message createMessage(Session session) throws JMSException {
+					return session.createObjectMessage(ids);
+				}
+			});
 			return new Result(true, "删除成功"); 
 		} catch (Exception e) {
 			e.printStackTrace();
