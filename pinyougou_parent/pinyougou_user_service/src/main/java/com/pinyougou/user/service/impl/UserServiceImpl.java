@@ -14,7 +14,7 @@ import com.pinyougou.pojo.TbUserExample.Criteria;
 import com.pinyougou.user.service.UserService;
 
 import entity.PageResult;
-
+import org.springframework.data.redis.core.RedisTemplate;
 
 
 /**
@@ -27,6 +27,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private TbUserMapper userMapper;
+
+
+	@Autowired
+	private RedisTemplate redisTemplate;
 	
 	/**
 	 * 查询全部
@@ -145,5 +149,23 @@ public class UserServiceImpl implements UserService {
 		Page<TbUser> page= (Page<TbUser>)userMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
-	
+
+
+	/**
+	 * 发送短信验证码
+	 * @param phone
+	 */
+	@Override
+	public void createSmsCode(String phone) {
+		//生成六位随机数
+		String smsCode = (long) (Math.random() * 1000000) + "";
+		System.out.println("验证码:" + smsCode);
+		//将验证码放入redis
+		redisTemplate.boundHashOps("smsCode").put(phone,smsCode);
+		//将短信内容发送给activeMQ
+
+
+
+	}
+
 }
