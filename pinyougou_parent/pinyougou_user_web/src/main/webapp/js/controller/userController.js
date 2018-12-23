@@ -1,6 +1,9 @@
  //控制层 
 app.controller('userController' ,function($scope,$controller   ,userService){	
 
+
+    $scope.entity={};
+
     //注册
     $scope.reg=function () {
         //比较两次输入的密码是否一致
@@ -15,6 +18,18 @@ app.controller('userController' ,function($scope,$controller   ,userService){
             })
         }
 
+    }
+
+
+    //发送验证码
+    $scope.sendCode=function () {
+        if ($scope.entity.phone == null || $scope.entity.phone == ""){
+            alert("请填写手机号码");
+            return;
+        }
+        userService.sendCode($scope.entity.phone).success(function (response) {
+            alert(response.message);
+        })
     }
 
 });	
