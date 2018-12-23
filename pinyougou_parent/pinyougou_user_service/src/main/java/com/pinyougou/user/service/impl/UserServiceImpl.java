@@ -168,4 +168,14 @@ public class UserServiceImpl implements UserService {
 
 	}
 
+	@Override
+	public boolean checkSmsCode(String phone, String code) {
+		String systemCode = (String) redisTemplate.boundHashOps("smsCode").get(phone);
+		if (systemCode == null || !systemCode.equals(code)){
+			return false;
+		}
+
+		return true;
+	}
+
 }

@@ -49,7 +49,12 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public Result add(@RequestBody TbUser user){
+	public Result add(@RequestBody TbUser user,String smsCode){
+		//校验验证码
+		boolean checkSmsCode = userService.checkSmsCode(user.getPhone(), smsCode);
+		if (!checkSmsCode){
+			return new Result(false,"验证码错误");
+		}
 		try {
 			userService.add(user);
 			return new Result(true, "增加成功");
@@ -114,7 +119,11 @@ public class UserController {
 	}
 
 
-
+	/**
+	 * 发送验证码
+	 * @param phone
+	 * @return
+	 */
 	@RequestMapping("/sendCode")
 	public Result sendCode(String phone){
 		if (!PhoneFormatCheckUtils.isPhoneLegal(phone)){
@@ -128,6 +137,9 @@ public class UserController {
 			return new Result(false,"验证码发送失败");
 		}
 	}
+
+
+
 
 	
 }

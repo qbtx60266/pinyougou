@@ -64,4 +64,12 @@ public interface UserService {
 	 * @param phone
 	 */
 	void createSmsCode(String phone);
+
+	/**
+	 * 校验验证码
+	 * @param phone
+	 * @param code
+	 * @return
+	 */
+	boolean checkSmsCode(String phone,String code);
 }

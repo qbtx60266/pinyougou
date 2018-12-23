@@ -13,7 +13,7 @@ app.controller('userController' ,function($scope,$controller   ,userService){
             $scope.entity.password='';
             return;
         }else {
-            userService.add($scope.entity).success(function (response) {
+            userService.add($scope.entity,$scope.smsCode).success(function (response) {
                 alert(response.message);
             })
         }
