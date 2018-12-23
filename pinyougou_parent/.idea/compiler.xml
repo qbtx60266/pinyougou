@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="generatorSqlmapCustom" />
+        <module name="itcast_sms_service" />
         <module name="pinyougou_common" />
         <module name="pinyougou_content_interface" />
         <module name="pinyougou_content_service" />
@@ -24,10 +25,14 @@
         <module name="pinyougou_sellergoods_servicew" />
         <module name="pinyougou_shop_web" />
         <module name="pinyougou_solr_util" />
+        <module name="pinyougou_user_interface" />
+        <module name="pinyougou_user_service" />
+        <module name="pinyougou_user_web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="generatorSqlmapCustom" target="1.5" />
+      <module name="itcast_sms_service" target="1.7" />
       <module name="pinyougou_common" target="1.7" />
       <module name="pinyougou_content_interface" target="1.8" />
       <module name="pinyougou_content_service" target="1.8" />
@@ -47,6 +52,9 @@
       <module name="pinyougou_sellergoods_servicew" target="1.8" />
       <module name="pinyougou_shop_web" target="1.8" />
       <module name="pinyougou_solr_util" target="1.8" />
+      <module name="pinyougou_user_interface" target="1.8" />
+      <module name="pinyougou_user_service" target="1.8" />
+      <module name="pinyougou_user_web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
