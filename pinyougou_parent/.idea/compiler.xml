@@ -8,6 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="generatorSqlmapCustom" />
         <module name="itcast_sms_service" />
+        <module name="pinyougou_cart_interface" />
+        <module name="pinyougou_cart_service" />
+        <module name="pinyougou_cart_web" />
         <module name="pinyougou_common" />
         <module name="pinyougou_content_interface" />
         <module name="pinyougou_content_service" />
@@ -33,6 +36,9 @@
     <bytecodeTargetLevel>
       <module name="generatorSqlmapCustom" target="1.5" />
       <module name="itcast_sms_service" target="1.7" />
+      <module name="pinyougou_cart_interface" target="1.8" />
+      <module name="pinyougou_cart_service" target="1.8" />
+      <module name="pinyougou_cart_web" target="1.8" />
       <module name="pinyougou_common" target="1.7" />
       <module name="pinyougou_content_interface" target="1.8" />
       <module name="pinyougou_content_service" target="1.8" />
