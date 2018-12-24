@@ -183,23 +183,24 @@ public class UserServiceImpl implements UserService {
 		//将验证码放入redis
 		redisTemplate.boundHashOps("smsCode").put(phone,smsCode);
 		//将短信内容发送给activeMQ
-        jmsTemplate.send(smsDestination, new MessageCreator() {
-			@Override
-			public Message createMessage(Session session) throws JMSException {
-				MapMessage mapMessage = session.createMapMessage();
-				//手机号
-				mapMessage.setString("mobile",phone);
-				//验证码
-				mapMessage.setString("template_code",template_code);
-				//签名
-				mapMessage.setString("sign_name",sign_name);
-				Map map = new HashMap();
-				map.put("number",smsCode);
-				//真实验证码
-				mapMessage.setString("param", JSON.toJSONString(map));
-				return mapMessage;
-			}
-		});
+		//暂时不用
+//        jmsTemplate.send(smsDestination, new MessageCreator() {
+//			@Override
+//			public Message createMessage(Session session) throws JMSException {
+//				MapMessage mapMessage = session.createMapMessage();
+//				//手机号
+//				mapMessage.setString("mobile",phone);
+//				//验证码
+//				mapMessage.setString("template_code",template_code);
+//				//签名
+//				mapMessage.setString("sign_name",sign_name);
+//				Map map = new HashMap();
+//				map.put("number",smsCode);
+//				//真实验证码
+//				mapMessage.setString("param", JSON.toJSONString(map));
+//				return mapMessage;
+//			}
+//		});
 
 
 	}
