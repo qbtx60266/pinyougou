@@ -119,7 +119,7 @@ public class GoodsServiceImpl implements GoodsService {
 			//商品id
 			item.setGoodsId(goods.getGoods().getId());
 			//卖家id
-			item.setSeller(goods.getGoods().getSellerId());
+			item.setSellerId(goods.getGoods().getSellerId());
 			//分类名称
 			item.setCategory(itemCatMapper.selectByPrimaryKey(goods.getGoods().getCategory3Id()).getName());
 			//商品名
