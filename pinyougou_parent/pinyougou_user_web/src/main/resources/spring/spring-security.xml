@@ -6,10 +6,10 @@
 
 
     <http pattern="/register.html" security="none"></http>
-    <http pattern="/css/**.html" security="none"></http>
-    <http pattern="/img/**.html" security="none"></http>
-    <http pattern="/js/**.html" security="none"></http>
-    <http pattern="/plugins/**.html" security="none"></http>
+    <http pattern="/css/**" security="none"></http>
+    <http pattern="/img/**" security="none"></http>
+    <http pattern="/js/**" security="none"></http>
+    <http pattern="/plugins/**" security="none"></http>
     <http pattern="/user/add.do" security="none"></http>
     <http pattern="/user/sendCode.do" security="none"></http>
 

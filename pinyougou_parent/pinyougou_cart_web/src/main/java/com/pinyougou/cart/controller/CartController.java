@@ -1,10 +1,11 @@
 package com.pinyougou.cart.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.pinyougou.cart.service.CartService;
 import com.pinyougou.pojogroup.Cart;
 import entity.Result;
-import org.opensaml.xml.signature.P;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class CartController {
     @Autowired
     private HttpServletRequest request;
 
-    @Autowired
+    @Reference
     private CartService cartService;
 
     @Autowired
