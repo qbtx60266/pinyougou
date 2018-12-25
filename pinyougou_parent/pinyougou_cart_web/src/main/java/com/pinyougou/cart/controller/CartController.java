@@ -94,6 +94,7 @@ public class CartController {
             List<Cart> cartList_redis = cartService.findCartListFromRedis(username);
             //判断本地购物车中是否存在数据
             if (cartList_cookie.size() > 0){
+                System.out.println("合并");
                 //合并购物车
                 List<Cart> cartList = cartService.mergeCartList(cartList_cookie, cartList_redis);
                 //将合并后的购物车存入redis
