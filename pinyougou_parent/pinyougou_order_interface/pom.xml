@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
         <packaging>jar</packaging>
-    <artifactId>pinyougou_cart_interface</artifactId>
+    <artifactId>pinyougou_order_interface</artifactId>
 <dependencies>
     <dependency>
         <groupId>com.pinyougou</groupId>
