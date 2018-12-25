@@ -95,6 +95,11 @@ public class CartServiceImpl implements CartService {
         return cartList;
     }
 
+    /**
+     * 从redis取购物车
+     * @param username
+     * @return
+     */
     @Override
     public List<Cart> findCartListFromRedis(String username) {
         List<Cart> cartList = (List<Cart>) redisTemplate.boundHashOps("cartList").get(username);
@@ -104,9 +109,31 @@ public class CartServiceImpl implements CartService {
         return cartList;
     }
 
+
+    /**
+     * 向redis存购物车
+     * @param username
+     * @param cartList
+     */
     @Override
     public void saveCartListToRedis(String username, List<Cart> cartList) {
         redisTemplate.boundHashOps("cartList").put(username,cartList);
+    }
+
+    /**
+     * 合并购物车
+     * @param cartList1
+     * @param cartList2
+     * @return
+     */
+    @Override
+    public List<Cart> mergeCartList(List<Cart> cartList1, List<Cart> cartList2) {
+        for (Cart cart : cartList2) {
+            for (TbOrderItem orderItem : cart.getOrderItemList()) {
+                addGoodsToCartList(cartList1,orderItem.getItemId(),orderItem.getNum());
+            }
+        }
+        return cartList1;
     }
 
 
