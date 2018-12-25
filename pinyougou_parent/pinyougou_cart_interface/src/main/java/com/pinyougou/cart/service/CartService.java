@@ -19,4 +19,19 @@ public interface CartService {
      */
     List<Cart> addGoodsToCartList(List<Cart> list,Long itemId,Integer num);
 
+
+    /**
+     * 从redis提取购物车
+     * @param username
+     * @return
+     */
+    List<Cart> findCartListFromRedis(String username);
+
+    /**
+     * 将购物车列表存入redis
+     * @param username
+     * @param cartList
+     */
+    void saveCartListToRedis(String username,List<Cart> cartList);
+
 }
