@@ -26,4 +26,10 @@ app.service('cartService',function($http){
 
     }
 
+
+    //获取当前登陆账号的收货地址
+    this.findAddressList=function () {
+        return $http.get('address/findListByLoginUser.do');
+    }
+
 });

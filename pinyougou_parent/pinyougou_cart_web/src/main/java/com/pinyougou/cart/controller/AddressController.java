@@ -1,6 +1,7 @@
 package com.pinyougou.cart.controller;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -101,7 +102,7 @@ public class AddressController {
 	
 		/**
 	 * 查询+分页
-	 * @param brand
+	 * @param address
 	 * @param page
 	 * @param rows
 	 * @return
@@ -109,6 +110,18 @@ public class AddressController {
 	@RequestMapping("/search")
 	public PageResult search(@RequestBody TbAddress address, int page, int rows  ){
 		return addressService.findPage(address, page, rows);		
+	}
+
+
+	/**
+	 * 根据登陆用户查询地址列表
+	 * @return
+	 */
+	@RequestMapping("/findListByLoginUser")
+	public List<TbAddress> findListByLoginUser(){
+		//获取登陆用户
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		return addressService.findListByUserId(username);
 	}
 	
 }

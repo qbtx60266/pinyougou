@@ -123,5 +123,18 @@ public class AddressServiceImpl implements AddressService {
 		Page<TbAddress> page= (Page<TbAddress>)addressMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
-	
+
+	/**
+	 * 根据userid查询地址列表
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<TbAddress> findListByUserId(String userId) {
+
+		TbAddressExample example = new TbAddressExample();
+		example.createCriteria().andUserIdEqualTo(userId);
+		return addressMapper.selectByExample(example);
+	}
+
 }
