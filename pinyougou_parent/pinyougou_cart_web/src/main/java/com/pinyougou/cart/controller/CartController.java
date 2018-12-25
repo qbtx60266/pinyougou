@@ -7,6 +7,7 @@ import com.pinyougou.pojogroup.Cart;
 import entity.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import util.CookieUtil;
@@ -41,6 +42,10 @@ public class CartController {
      */
     @RequestMapping("/addGoodsToCartList")
     public Result addGoodsToCartList(Long itemId,Integer num){
+
+
+
+
         try {
             //从cookie中提取购物车
             List<Cart> cartList = findCartList();
@@ -63,6 +68,17 @@ public class CartController {
      */
     @RequestMapping("/findCartList")
     public List<Cart> findCartList(){
+        //当前登陆账号
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(name);
+        if ("anonymousUser".equals(name)){
+            //未登录
+
+        }else {
+            //已登陆
+
+        }
+
         //从cookie中提取购物车
         String cartListString = CookieUtil.getCookieValue(request, "cartList", "UTF-8");
         if (cartListString == null || cartListString.length()==0){
