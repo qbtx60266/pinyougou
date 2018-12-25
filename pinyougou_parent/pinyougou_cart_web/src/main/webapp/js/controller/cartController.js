@@ -7,4 +7,17 @@ app.controller('cartController',function($scope,cartService){
             }
         );
     }
+
+    //购物车数量加减
+    $scope.addGoodsToCartList=function (itemId,num) {
+        cartService.addGoodsToCartList(itemId,num).success(function (response) {
+            if (response.success){
+                $scope.findCartList();
+            }else {
+                alert(response.message);
+            }
+        })
+    }
+
+
 });
