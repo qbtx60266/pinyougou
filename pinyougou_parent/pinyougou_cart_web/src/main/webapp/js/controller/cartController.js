@@ -83,5 +83,12 @@ app.controller('cartController',function($scope,cartService){
         })
     }
 
+    //订单对象
+    $scope.order={paymentType:'1'};
+    //选择支付类型
+    $scope.selectPayType=function (type) {
+        $scope.order.paymentType=type;
+    }
+
 
 });
