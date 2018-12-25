@@ -50,7 +50,9 @@ public class AddressController {
 	@RequestMapping("/add")
 	public Result add(@RequestBody TbAddress address){
 		try {
-			addressService.add(address);
+            String name = SecurityContextHolder.getContext().getAuthentication().getName();
+            address.setUserId(name);
+            addressService.add(address);
 			return new Result(true, "增加成功");
 		} catch (Exception e) {
 			e.printStackTrace();

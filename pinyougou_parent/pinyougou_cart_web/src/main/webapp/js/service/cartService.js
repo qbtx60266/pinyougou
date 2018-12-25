@@ -32,4 +32,9 @@ app.service('cartService',function($http){
         return $http.get('address/findListByLoginUser.do');
     }
 
+    //新增收货地址
+    this.addAddress=function (address) {
+        return $http.post('address/add.do',address);
+    }
+
 });

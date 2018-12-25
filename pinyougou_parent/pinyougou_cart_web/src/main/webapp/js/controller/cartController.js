@@ -71,5 +71,17 @@ app.controller('cartController',function($scope,cartService){
         }
     }
 
+    //新增收货地址
+    $scope.addAddress=function () {
+        cartService.addAddress($scope.entity).success(function (response) {
+            if (response.success){
+                $scope.findCartList();
+            }else {
+                alert(response.message);
+            }
+            
+        })
+    }
+
 
 });
