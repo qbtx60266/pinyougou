@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * 购物车控制层
+ *
  * @author FallingSkies
  * @date 2018/12/24 21:54
  */
@@ -36,55 +37,62 @@ public class CartController {
 
     /**
      * 将商品加入购物车
+     *
      * @param itemId
      * @param num
      * @return
      */
     @RequestMapping("/addGoodsToCartList")
-    public Result addGoodsToCartList(Long itemId,Integer num){
-
-
-
+    public Result addGoodsToCartList(Long itemId, Integer num) {
+        //当前登陆账号
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(name);
 
         try {
-            //从cookie中提取购物车
+            //提取购物车
             List<Cart> cartList = findCartList();
             //调用服务方法操作购物车
             cartList = cartService.addGoodsToCartList(cartList, itemId, num);
-            //将新的购物车存入cookie
-            String cartListString = JSON.toJSONString(cartList);
-            CookieUtil.setCookie(request,response,"cartList",cartListString,86400,"UTF-8");
-            return new Result(true,"存入购物车成功");
+            //如果未登录
+            if ("anonymousUser".equals(name)) {
+                //将新的购物车存入cookie
+                String cartListString = JSON.toJSONString(cartList);
+                CookieUtil.setCookie(request, response, "cartList", cartListString, 86400, "UTF-8");
+            } else {
+                //如果登陆
+                cartService.saveCartListToRedis(name,cartList);
+            }
+            return new Result(true, "存入购物车成功");
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,"存入购物车失败");
+            return new Result(false, "存入购物车失败");
         }
 
     }
 
     /**
      * 从cookie中提取购物车
+     *
      * @return
      */
     @RequestMapping("/findCartList")
-    public List<Cart> findCartList(){
+    public List<Cart> findCartList() {
         //当前登陆账号
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         System.out.println(name);
-        if ("anonymousUser".equals(name)){
+        if ("anonymousUser".equals(name)) {
             //未登录
-
-        }else {
+            //从cookie中提取购物车
+            String cartListString = CookieUtil.getCookieValue(request, "cartList", "UTF-8");
+            if (cartListString == null || cartListString.length() == 0) {
+                cartListString = "[]";
+            }
+            List<Cart> cartList_cookie = JSON.parseArray(cartListString, Cart.class);
+            return cartList_cookie;
+        } else {
             //已登陆
-
+            List<Cart> cartList_redis = cartService.findCartListFromRedis(name);
+            return cartList_redis;
         }
-
-        //从cookie中提取购物车
-        String cartListString = CookieUtil.getCookieValue(request, "cartList", "UTF-8");
-        if (cartListString == null || cartListString.length()==0){
-            cartListString="[]";
-        }
-        List<Cart> cartList_cookie = JSON.parseArray(cartListString, Cart.class);
-        return cartList_cookie;
     }
 }
