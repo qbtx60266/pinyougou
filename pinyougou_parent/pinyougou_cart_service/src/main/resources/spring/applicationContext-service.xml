@@ -14,6 +14,6 @@
     <dubbo:registry address="zookeeper://47.99.218.74:2181"/>
     <dubbo:annotation package="com.pinyougou.cart.service.impl" />
 	<dubbo:provider timeout="10000000"></dubbo:provider>
-	<dubbo:registry id="zkcenter" protocol="zookeeper" address="${dubbo.zk_address}" file="${catalina.home}/dubbo-registry/dubbo-registry.properties"/>
+	<!--<dubbo:registry id="zkcenter" protocol="zookeeper" address="${dubbo.zk_address}" file="${catalina.home}/dubbo-registry/dubbo-registry.properties"/>-->
    
 </beans>
