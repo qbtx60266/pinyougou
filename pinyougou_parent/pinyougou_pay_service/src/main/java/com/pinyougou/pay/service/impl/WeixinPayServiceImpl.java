@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.pinyougou.pay.service.WeixinPayService;
 import org.springframework.beans.factory.annotation.Value;
+import util.HttpClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,14 +46,28 @@ public class WeixinPayServiceImpl implements WeixinPayService {
 
 
 
-        //发送请求
         try {
             String paramXml = WXPayUtil.generateSignedXml(param, partnerkey);
             System.out.println("参数" + paramXml);
+        //发送请求
+            HttpClient httpClient = new HttpClient("https://api.mch.weixin.qq.com/pay/unifiedorder");
+            httpClient.setHttps(true);
+            httpClient.setXmlParam(paramXml);
+            httpClient.post();
+
+        //获取结果
+            String xmlResult = httpClient.getContent();
+            Map<String, String> mapResult = WXPayUtil.xmlToMap(xmlResult);
+
+            Map map = new HashMap();
+            //生成支付二维码的连接
+            map.put("code_url",mapResult.get("code_url"));
+            map.put("out_trade_no",out_trade_no);
+
+            return map;
         } catch (Exception e) {
             e.printStackTrace();
+            return new HashMap();
         }
-        //获取结果
-        return null;
     }
 }
