@@ -34,6 +34,7 @@ public class PayController {
     @RequestMapping("/queryPayStatus")
     public Result queryPayStatus(String out_trade_no){
         Result result = null;
+        int x = 0;
         while (true){
             //调用查询
             Map<String,String> map = weixinPayService.queryPayStatus(out_trade_no);
@@ -50,6 +51,11 @@ public class PayController {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+            x ++;
+            if(x >= 100){
+                result = new Result(false,"二维码超时");
+                break;
             }
         }
         return result;

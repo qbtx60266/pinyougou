@@ -1,4 +1,4 @@
-app.controller('payController',function ($scope, payService) {
+app.controller('payController',function ($scope, payService,$location) {
 
     $scope.createNative=function () {
         payService.createNative().success(function (response) {
@@ -21,12 +21,20 @@ app.controller('payController',function ($scope, payService) {
     queryPayStatus=function () {
         payService.queryPayStatus($scope.out_trade_no).success(function (response) {
             if (response.success){
-                location.href="paysuccess.html";
+                location.href="paysuccess.html#?money=" + $scope.money;
             }else{
-                location.href="payfail.html";
+                if (response.message=='二维码超时'){
+                    $scope.createNative();
+                }else {
+                    location.href="payfail.html";
+                }
 
             }
         })
+    }
+    //获取金额
+    $scope.getMoney=function () {
+        return $location.search()['money'];
     }
 
 
