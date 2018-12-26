@@ -13,7 +13,19 @@ app.controller('payController',function ($scope, payService) {
                     value:response.code_url,
                     level:'H'
                 }
-            )
+            );
+            queryPayStatus();
+        })
+    }
+
+    queryPayStatus=function () {
+        payService.queryPayStatus($scope.out_trade_no).success(function (response) {
+            if (response.success){
+                location.href="paysuccess.html";
+            }else{
+                location.href="payfail.html";
+
+            }
         })
     }
 
