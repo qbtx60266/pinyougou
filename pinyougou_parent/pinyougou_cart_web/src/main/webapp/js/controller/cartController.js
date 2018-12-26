@@ -99,7 +99,19 @@ app.controller('cartController',function($scope,cartService){
         //联系人
         $scope.order.receiver=$scope.address.contact;
         cartService.submitOrder($scope.order).success(function (response) {
-            alert(response.message);
+            //alert(response.message);
+            if (response.success){
+                //页面跳转
+                //如果微信支付,付款页面
+                if ($scope.order.paymentType=='1'){
+                    location.href="pay.html";
+                }else {
+                    //货到付款，提示页面
+                    location.href="paysuccess.html";
+                }
+            }else {
+                alert(response.message);
+            }
         })
     }
 
