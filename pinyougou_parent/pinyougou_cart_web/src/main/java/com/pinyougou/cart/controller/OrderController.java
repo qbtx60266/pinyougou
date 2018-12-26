@@ -1,6 +1,7 @@
 package com.pinyougou.cart.controller;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +49,12 @@ public class OrderController {
 	 */
 	@RequestMapping("/add")
 	public Result add(@RequestBody TbOrder order){
+		//获取登陆账户
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		order.setUserId(username);
+		//订单来源
+		order.setSourceType("2");
+
 		try {
 			orderService.add(order);
 			return new Result(true, "增加成功");
