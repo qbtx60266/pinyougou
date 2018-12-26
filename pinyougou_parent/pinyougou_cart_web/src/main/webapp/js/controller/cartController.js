@@ -90,5 +90,18 @@ app.controller('cartController',function($scope,cartService){
         $scope.order.paymentType=type;
     }
 
+    //提交订单
+    $scope.submitOrder=function () {
+        //地址
+        $scope.order.recevierAreaName=$scope.address.address;
+        //手机号
+        $scope.order.receiverMobile=$scope.address.mobile;
+        //联系人
+        $scope.order.receiver=$scope.address.contact;
+        cartService.submitOrder($scope.order).success(function (response) {
+            alert(response.message);
+        })
+    }
+
 
 });

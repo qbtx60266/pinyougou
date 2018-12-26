@@ -37,4 +37,9 @@ app.service('cartService',function($http){
         return $http.post('address/add.do',address);
     }
 
+    //提交订单
+    this.submitOrder=function (order) {
+        return $http.post('order/add.do',order);
+    }
+
 });
