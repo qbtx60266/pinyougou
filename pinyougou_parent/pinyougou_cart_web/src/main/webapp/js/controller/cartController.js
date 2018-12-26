@@ -93,7 +93,7 @@ app.controller('cartController',function($scope,cartService){
     //提交订单
     $scope.submitOrder=function () {
         //地址
-        $scope.order.recevierAreaName=$scope.address.address;
+        $scope.order.receiverAreaName=$scope.address.address;
         //手机号
         $scope.order.receiverMobile=$scope.address.mobile;
         //联系人

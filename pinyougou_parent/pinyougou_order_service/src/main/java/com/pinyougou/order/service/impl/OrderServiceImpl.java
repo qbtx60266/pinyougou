@@ -92,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
 			//订单来源
 			tbOrder.setSourceType(order.getSourceType());
 			//卖家ID
-			tbOrder.setSellerId(order.getSellerId());
+			tbOrder.setSellerId(cart.getSellerId());
 			double money = 0;
 			//循环购物车中每条明细记录
 			for (TbOrderItem orderItem : cart.getOrderItemList()) {
@@ -101,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
 				//订单编号
 				orderItem.setOrderId(orderId);
 				//商家ID
-				orderItem.setSellerId(order.getSellerId());
+				orderItem.setSellerId(cart.getSellerId());
 				orderItemMapper.insert(orderItem);
 				money+=orderItem.getTotalFee().doubleValue();
 			}
